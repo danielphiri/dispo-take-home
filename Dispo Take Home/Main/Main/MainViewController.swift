@@ -58,9 +58,10 @@ class MainViewController: UIViewController {
       frame: .zero,
       collectionViewLayout: layout
     )
-    collectionView.backgroundColor = .clear
+    collectionView.backgroundColor     = .clear
     collectionView.keyboardDismissMode = .onDrag
-    
+    collectionView.delegate            = self
+    collectionView.dataSource          = self
     return collectionView
   }()
 }
@@ -71,4 +72,30 @@ extension MainViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     // TODO: implement
   }
+}
+
+// MARK: UICollectionViewDelegate
+
+extension MainViewController: UICollectionViewDelegate {
+  
+}
+
+// MARK: UICollectionViewDataSource
+
+extension MainViewController: UICollectionViewDataSource {
+  
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 1
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    #warning("TODO")
+    return UICollectionViewCell()
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    #warning("TODO")
+    return 10
+  }
+  
 }
