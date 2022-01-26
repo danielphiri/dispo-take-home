@@ -5,11 +5,23 @@ class MainViewController: UIViewController {
   private let screenBounds : CGRect = UIScreen.main.bounds
   private let padding      : CGFloat = .zero
   private let cellsHeight  : CGFloat  = 134
+  private var viewModel    : MainViewModel?
 
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationItem.titleView = searchBar
-
+    initModel()
+  }
+  
+  private func initModel() {
+    let response = APIListResponse(data: [])
+    let model: Observable<APIListResponse> = Observable(value: response) { [weak self] data in
+      guard let self = self else { return }
+      DispatchQueue.main.async {
+        self.collectionView.reloadData()
+      }
+    }
+    viewModel = MainViewModel(model: model)
   }
 
   override func loadView() {
@@ -48,6 +60,7 @@ class MainViewController: UIViewController {
     )
     collectionView.backgroundColor = .clear
     collectionView.keyboardDismissMode = .onDrag
+    
     return collectionView
   }()
 }
