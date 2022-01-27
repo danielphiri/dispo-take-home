@@ -18,7 +18,7 @@ final class MainViewModel {
   }
   
   private func load() {
-    client.fetch(url: .feed) { [weak self] result in
+    client.fetch(url: .trending, parameters: ["rating": "pg"]) { [weak self] result in
       guard let self = self else { return }
       switch result {
         case .failure(let error):
