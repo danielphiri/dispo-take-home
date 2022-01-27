@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol CellConfigurable: AnyObject {
+  func setUp()
+}

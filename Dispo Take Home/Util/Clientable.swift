@@ -8,7 +8,8 @@
 import Foundation
 
 protocol Clientable {
-  func fetch<T: Codable>(url: BackendURL, completion: @escaping (Result<T?, Error>) -> ())
+  associatedtype T: Decodable
+  func fetch(url: BackendURL, completion: @escaping (Result<T?, Error>) -> ())
 }
 
 func safePrint(_ info: Any) {

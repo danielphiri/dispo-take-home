@@ -62,6 +62,7 @@ class MainViewController: UIViewController {
     collectionView.keyboardDismissMode = .onDrag
     collectionView.delegate            = self
     collectionView.dataSource          = self
+    collectionView.register(GifCellView.self, forCellWithReuseIdentifier: GifCellView.reuseIdentifier)
     return collectionView
   }()
 }
@@ -89,13 +90,17 @@ extension MainViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    #warning("TODO")
-    return UICollectionViewCell()
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GifCellView.reuseIdentifier, for: indexPath) as? GifCellView else {
+      safePrint("Gif Cell View not set up")
+      return .init()
+    }
+//    cell.setUp()
+    return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     #warning("TODO")
-    return 10
+    return viewModel?.model.value.data.count ?? 0
   }
   
 }

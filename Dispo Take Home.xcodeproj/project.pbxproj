@@ -10,6 +10,11 @@
 		944C54CE27A1CBB100BF1491 /* Clientable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54CD27A1CBB100BF1491 /* Clientable.swift */; };
 		944C54D027A1D62500BF1491 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54CF27A1D62500BF1491 /* MainViewModel.swift */; };
 		944C54D227A1D66500BF1491 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D127A1D66500BF1491 /* Observable.swift */; };
+		944C54D527A1DE0400BF1491 /* GifCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D427A1DE0400BF1491 /* GifCellView.swift */; };
+		944C54D727A1DED300BF1491 /* GifCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D627A1DED300BF1491 /* GifCellViewModel.swift */; };
+		944C54D927A1DF4500BF1491 /* CellConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D827A1DF4500BF1491 /* CellConfigurable.swift */; };
+		944C54DB27A1DFAF00BF1491 /* CellViewModelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54DA27A1DFAF00BF1491 /* CellViewModelable.swift */; };
+		944C54DD27A21BBB00BF1491 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54DC27A21BBA00BF1491 /* Extensions.swift */; };
 		9A829F02277D7CF7002C03F2 /* APIListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A829F01277D7CF7002C03F2 /* APIListResponse.swift */; };
 		FF9415B525EECD340029E28F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9415B425EECD340029E28F /* AppDelegate.swift */; };
 		FF9415B725EECD340029E28F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9415B625EECD340029E28F /* SceneDelegate.swift */; };
@@ -30,6 +35,11 @@
 		944C54CD27A1CBB100BF1491 /* Clientable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clientable.swift; sourceTree = "<group>"; };
 		944C54CF27A1D62500BF1491 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		944C54D127A1D66500BF1491 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		944C54D427A1DE0400BF1491 /* GifCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCellView.swift; sourceTree = "<group>"; };
+		944C54D627A1DED300BF1491 /* GifCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCellViewModel.swift; sourceTree = "<group>"; };
+		944C54D827A1DF4500BF1491 /* CellConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellConfigurable.swift; sourceTree = "<group>"; };
+		944C54DA27A1DFAF00BF1491 /* CellViewModelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModelable.swift; sourceTree = "<group>"; };
+		944C54DC27A21BBA00BF1491 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9A829F01277D7CF7002C03F2 /* APIListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIListResponse.swift; sourceTree = "<group>"; };
 		FF9415B125EECD340029E28F /* Dispo Take Home.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dispo Take Home.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9415B425EECD340029E28F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,8 +81,18 @@
 		944C54CB27A1CA8000BF1491 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				944C54D327A1DDB900BF1491 /* Gif Cell */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		944C54D327A1DDB900BF1491 /* Gif Cell */ = {
+			isa = PBXGroup;
+			children = (
+				944C54D427A1DE0400BF1491 /* GifCellView.swift */,
+				944C54D627A1DED300BF1491 /* GifCellViewModel.swift */,
+			);
+			path = "Gif Cell";
 			sourceTree = "<group>";
 		};
 		FF9415A825EECD340029E28F = {
@@ -142,6 +162,9 @@
 				9A829F01277D7CF7002C03F2 /* APIListResponse.swift */,
 				944C54CD27A1CBB100BF1491 /* Clientable.swift */,
 				944C54D127A1D66500BF1491 /* Observable.swift */,
+				944C54D827A1DF4500BF1491 /* CellConfigurable.swift */,
+				944C54DA27A1DFAF00BF1491 /* CellViewModelable.swift */,
+				944C54DC27A21BBA00BF1491 /* Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -226,14 +249,19 @@
 			files = (
 				944C54CE27A1CBB100BF1491 /* Clientable.swift in Sources */,
 				FF9415F625EEF5760029E28F /* GifInfo.swift in Sources */,
+				944C54DB27A1DFAF00BF1491 /* CellViewModelable.swift in Sources */,
 				FF9415E625EEDF380029E28F /* GifApiClient.swift in Sources */,
 				FF9415D525EED60B0029E28F /* Constants.swift in Sources */,
 				944C54D227A1D66500BF1491 /* Observable.swift in Sources */,
 				FF9415E225EEDC3A0029E28F /* SearchResult.swift in Sources */,
 				FF9415CB25EED1360029E28F /* MainViewController.swift in Sources */,
+				944C54D527A1DE0400BF1491 /* GifCellView.swift in Sources */,
 				FF9415B525EECD340029E28F /* AppDelegate.swift in Sources */,
 				FF9415B725EECD340029E28F /* SceneDelegate.swift in Sources */,
+				944C54D927A1DF4500BF1491 /* CellConfigurable.swift in Sources */,
 				FF9415D225EED25A0029E28F /* DetailViewController.swift in Sources */,
+				944C54D727A1DED300BF1491 /* GifCellViewModel.swift in Sources */,
+				944C54DD27A21BBB00BF1491 /* Extensions.swift in Sources */,
 				9A829F02277D7CF7002C03F2 /* APIListResponse.swift in Sources */,
 				944C54D027A1D62500BF1491 /* MainViewModel.swift in Sources */,
 			);
