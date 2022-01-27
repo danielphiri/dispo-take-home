@@ -20,5 +20,3 @@ func safePrint(_ info: Any) {
 enum ErrorCode: Int {
   case safeUnwrap = 501
 }
-
-
