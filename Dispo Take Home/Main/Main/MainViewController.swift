@@ -4,7 +4,7 @@ class MainViewController: UIViewController {
   
   private let screenBounds : CGRect = UIScreen.main.bounds
   private let padding      : CGFloat = .zero
-  private let cellsHeight  : CGFloat  = 134
+  private let cellsHeight  : CGFloat  = 120
   private var viewModel    : MainViewModel?
 
   override func viewDidLoad() {
@@ -94,7 +94,8 @@ extension MainViewController: UICollectionViewDataSource {
       safePrint("Gif Cell View not set up")
       return .init()
     }
-//    cell.setUp()
+    let data = viewModel?.model.value.data[indexPath.row]
+    cell.setUp(data: data)
     return cell
   }
   

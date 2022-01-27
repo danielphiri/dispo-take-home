@@ -7,6 +7,12 @@
 
 import Foundation
 
-final class GifCellViewModel {
+final class GifCellViewModel  {
+  
+  var model: Observable<GifObject>
+  
+  init(model: Observable<GifObject>) {
+    self.model = model
+  }
   
 }

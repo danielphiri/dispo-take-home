@@ -6,16 +6,22 @@
 //
 
 import UIKit
+import AVKit
+import WebKit
 import SnapKit
 
 class GifCellView: UICollectionViewCell, CellConfigurable {
   
+  var model                  : GifObject?
   static let reuseIdentifier = "GifCellView"
   private let padding        : CGFloat = 20
+  private var isLoaded       = false
   
-  private var gifView: UIView = {
-    let view = UIView()
-    view.backgroundColor = .blue
+  private var gifView: WKWebView = {
+    let webConfiguration = WKWebViewConfiguration()
+    webConfiguration.allowsInlineMediaPlayback = true
+    webConfiguration.mediaTypesRequiringUserActionForPlayback = []
+    let view = WKWebView(frame: .zero, configuration: webConfiguration)
     return view
   }()
   
@@ -24,8 +30,9 @@ class GifCellView: UICollectionViewCell, CellConfigurable {
     label.backgroundColor = .clear
     label.textColor       = .systemBlack
     label.textAlignment   = .left
-    label.numberOfLines   = 0
-    label.font            = UIFont.systemFont(ofSize: 25, weight: .black)
+//    label.numberOfLines   = 0
+    label.font            = UIFont.systemFont(ofSize: 32, weight: .regular)
+    label.lineBreakMode = .byTruncatingTail
     return label
   }()
   
@@ -39,8 +46,18 @@ class GifCellView: UICollectionViewCell, CellConfigurable {
     loadSubviews()
   }
   
-  func setUp() {
-    
+  func setUp<T>(data: T) {
+    DispatchQueue.main.async {
+      if self.isLoaded {
+        return
+      }
+      guard let data = data as? GifObject else { return }
+      self.model = data
+      self.titleLabel.text = data.title
+      let html = "<img src=\"\(data.images.fixed_height.url)\" width=\"100%\">"
+      self.gifView.loadHTMLString(html, baseURL: nil)
+      self.isLoaded = true
+    }
   }
   
   private func loadSubviews() {
@@ -55,11 +72,13 @@ class GifCellView: UICollectionViewCell, CellConfigurable {
       make.top.equalTo(contentView)
       make.bottom.equalTo(contentView)
       make.height.equalTo(contentView.frame.height)
-      make.width.equalTo(contentView.frame.height + padding)
+      make.width.equalTo(contentView.frame.height)
     }
-    titleLabel.snp.makeConstraints { make in
+    
+    titleLabel.snp.updateConstraints { make in
       make.left.equalTo(gifView.snp_rightMargin).offset(padding)
-      make.right.equalTo(contentView)
+//      make.width.equalTo(contentView)
+      make.trailing.equalTo(contentView)//.offset(20)//.offset(-\padding)
       make.bottom.equalTo(contentView)
       make.top.equalTo(contentView)
     }

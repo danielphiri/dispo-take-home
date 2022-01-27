@@ -8,5 +8,7 @@
 import Foundation
 
 protocol CellConfigurable: AnyObject {
-  func setUp()
+  
+  func setUp<T>(data: T)
+  
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 
-protocol CellViewModelable {
-//  associatedtype T
-//  var data: Observable<T> { get }
-}
+//protocol CellViewModelable {
+//  var data: T
+//}
