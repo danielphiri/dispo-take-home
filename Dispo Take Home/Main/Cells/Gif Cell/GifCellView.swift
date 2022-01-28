@@ -29,8 +29,8 @@ class GifCellView: CellConfigurable {
     label.backgroundColor = .clear
     label.textColor       = .systemBlack
     label.textAlignment   = .left
-    label.numberOfLines   = 0
-    label.font            = UIFont.systemFont(ofSize: 32, weight: .regular)
+//    label.numberOfLines   = 0
+    label.font            = UIFont.systemFont(ofSize: 29, weight: .regular)
     label.lineBreakMode   = .byTruncatingTail
     return label
   }()
@@ -69,11 +69,11 @@ class GifCellView: CellConfigurable {
       make.height.equalTo(contentView.frame.height)
       make.width.equalTo(contentView.frame.height)
     }
-    titleLabel.snp.updateConstraints { make in
+    titleLabel.snp.makeConstraints { make in
       make.leading.equalTo(gifView.snp.trailing).offset(padding)
-      make.trailing.equalTo(contentView.snp.trailing).offset(-padding)
-      make.bottom.equalTo(contentView.snp.bottom)
-      make.top.equalTo(contentView.snp.top)
+      make.width.equalTo(contentView.frame.width - (contentView.frame.height + (padding * 3)))
+      make.bottom.equalTo(contentView)
+      make.top.equalTo(contentView)
     }
   }
     
