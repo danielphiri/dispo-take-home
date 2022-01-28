@@ -1,8 +1,11 @@
-import UIKit
+//
+//  GifObject.swift
+//  Dispo Take Home
+//
+//  Created by Daniel Phiri on 1/27/22.
+//
 
-struct APIListResponse: Codable {
-  var data: [GifObject]
-}
+import Foundation
 
 struct GifObject: Codable {
   var id: String
@@ -12,10 +15,10 @@ struct GifObject: Codable {
   /// Giphy URL (not gif url to be displayed)
   var url: URL
   var images: Images
-
+  
   struct Images: Codable {
     var fixed_height: Image
-
+    
     struct Image: Codable {
       var url: URL
       var width: String

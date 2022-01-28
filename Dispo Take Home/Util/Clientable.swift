@@ -9,7 +9,7 @@ import Foundation
 
 protocol Clientable {
   associatedtype T: Decodable
-  func fetch(url: BackendURL, parameters: [String: String], completion: @escaping (Result<T?, Error>) -> ())
+  func fetch(url: BackendURL, appendingPath: String?, parameters: [String: String], completion: @escaping (Result<T?, Error>) -> ())
 }
 
 func safePrint(_ info: Any) {
