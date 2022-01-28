@@ -12,19 +12,23 @@ final class DetailViewModel {
   private let searchResult : SearchResult
   private let client       : GifAPIClient<GifDetails>
   private let model        : Observable<GifDetails>
+  var state                : Observable<ViewDataState>
   
   init(
     searchResult : SearchResult,
     client       : GifAPIClient<GifDetails>,
-    model        : Observable<GifDetails>
+    model        : Observable<GifDetails>,
+    state        : Observable<ViewDataState>
   ) {
     self.searchResult = searchResult
     self.client       = client
     self.model        = model
+    self.state        = state
     load()
   }
   
   private func load() {
+    state.value = .loading
     client.fetch(
       url           : .gifInfo,
       appendingPath : "\(searchResult.id)",
@@ -34,13 +38,14 @@ final class DetailViewModel {
       switch result {
         case .failure(let error):
           safePrint(error)
-          #warning("TODO: Handle Error case")
+          self.state.value = .error
         case .success(let info):
           safePrint(info)
           if let info = info {
             self.model.value = info
+            self.state.value = .displaying
           } else {
-            #warning("TODO: Handle no results case")
+            self.state.value = .emptyResults
           }
       }
     }

@@ -10,6 +10,12 @@ class DetailViewController: UIViewController {
   private let gifViewHeight : CGFloat = 300
   private var viewModel     : DetailViewModel?
   
+  private lazy var spinner: UIActivityIndicatorView = {
+    let spinner = UIActivityIndicatorView(style: .large)
+    spinner.alpha = 0
+    return spinner
+  }()
+  
   private var gifView: WKWebView = {
     let view                        = WKWebView()
     view.isOpaque                   = false
@@ -72,7 +78,40 @@ class DetailViewController: UIViewController {
     let model  = Observable<GifDetails> { [weak self] info in
                   self?.updateData(with: info)
                 }
-    viewModel  = DetailViewModel(searchResult: searchResult, client: client, model: model)
+    let dataState: Observable<ViewDataState> = Observable { [weak self] state in
+      guard let state = state else { return }
+      self?.handleState(state: state)
+    }
+    viewModel  = DetailViewModel(searchResult: searchResult, client: client, model: model, state: dataState)
+  }
+  
+  private func handleState(state: ViewDataState) {
+    switch state {
+      case .loading:
+        toggleLoadingMode(on: true)
+      case .displaying:
+        toggleLoadingMode(on: false)
+      case .emptyResults:
+        #warning("TODO: Handle No Results Case")
+      case .error:
+        #warning("TODO: Handle Error Case")
+    }
+  }
+  
+  private func toggleLoadingMode(on: Bool) {
+    DispatchQueue.main.async {
+      if on {
+        UIView.animate(withDuration: 0.8, delay: 0) {
+          self.spinner.startAnimating()
+          self.spinner.alpha = 1
+        } completion: { _ in }
+      } else {
+        UIView.animate(withDuration: 0.8, delay: 0) {
+          self.spinner.stopAnimating()
+          self.spinner.alpha = 0
+        } completion: { _ in }
+      }
+    }
   }
   
   private func updateData(with info: GifDetails?) {
@@ -93,6 +132,7 @@ class DetailViewController: UIViewController {
     view.addSubview(titleLabel)
     view.addSubview(sourceLabel)
     view.addSubview(ratingLabel)
+    view.addSubview(spinner)
     setUpConstraints()
     loadViewModel(searchResult: searchResult)
   }
@@ -118,6 +158,12 @@ class DetailViewController: UIViewController {
       make.top.equalTo(sourceLabel.snp.bottom).offset(padding/2)
       make.leading.equalTo(view).offset(padding)
       make.trailing.equalTo(view).offset(-padding)
+    }
+    spinner.snp.makeConstraints { make in
+      make.width.equalTo(50)
+      make.height.equalTo(50)
+      make.centerX.equalTo(view.snp.centerX)
+      make.centerY.equalTo(view.snp.centerY)
     }
   }
   
