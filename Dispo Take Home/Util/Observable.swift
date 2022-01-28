@@ -9,8 +9,8 @@ import Foundation
 
 final class Observable<T> {
   
-  let valueObserver : ((T) -> ())
-  var value         : T {
+  let valueObserver : ((T?) -> ())
+  var value         : T? {
                         didSet {
                           DispatchQueue.main.async { [weak self] in
                             guard let self = self else { return }
@@ -19,8 +19,7 @@ final class Observable<T> {
                         }
                       }
   
-  init(value: T, valueObserver: @escaping (T) -> ()) {
-    self.value         = value
+  init(valueObserver: @escaping (T?) -> ()) {
     self.valueObserver = valueObserver
   }
   

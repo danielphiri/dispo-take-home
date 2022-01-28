@@ -1,20 +1,19 @@
 //
-//  GifCellView.swift
+//  SearchCellView.swift
 //  Dispo Take Home
 //
-//  Created by Daniel Phiri on 1/26/22.
+//  Created by Daniel Phiri on 1/27/22.
 //
 
 import UIKit
-import AVKit
 import WebKit
-import SnapKit
 
-class GifCellView: CellConfigurable {
+class SearchCellView: CellConfigurable {
   
-  var model                  : GifObject?
-  static let reuseIdentifier = "GifCellView"
+  var model                  : SearchResult?
+  static let reuseIdentifier = "SearchCellView"
   private let padding        : CGFloat = 20
+  private var isLoaded       = false
   
   private var gifView: WKWebView    = {
     let view                        = WKWebView()
@@ -29,8 +28,8 @@ class GifCellView: CellConfigurable {
     label.backgroundColor = .clear
     label.textColor       = .systemBlack
     label.textAlignment   = .left
-//    label.numberOfLines   = 0
-    label.font            = UIFont.systemFont(ofSize: 29, weight: .regular)
+    //    label.numberOfLines   = 0
+    label.font            = UIFont.systemFont(ofSize: 32, weight: .regular)
     label.lineBreakMode   = .byTruncatingTail
     return label
   }()
@@ -47,10 +46,10 @@ class GifCellView: CellConfigurable {
   
   override func setUp<T>(data: T) {
     DispatchQueue.main.async {
-      guard let data       = data as? GifObject else { return }
+      guard let data       = data as? SearchResult else { return }
       self.model           = data
       self.titleLabel.text = data.title
-      let html             = "<img src=\"\(data.images.fixed_height.url)\" width=\"50%\" height=\"50%\">"
+      let html             = "<img src=\"\(data.gifUrl)\" width=\"100%\">"
       self.gifView.loadHTMLString(html, baseURL: nil)
     }
   }
@@ -69,12 +68,15 @@ class GifCellView: CellConfigurable {
       make.height.equalTo(contentView.frame.height)
       make.width.equalTo(contentView.frame.height)
     }
-    titleLabel.snp.makeConstraints { make in
-      make.leading.equalTo(gifView.snp.trailing).offset(padding)
-      make.width.equalTo(contentView.frame.width - (contentView.frame.height + (padding * 3)))
+    
+    titleLabel.snp.updateConstraints { make in
+      make.left.equalTo(gifView.snp_rightMargin).offset(padding)
+      make.trailing.equalTo(contentView)//.offset(-\padding)
       make.bottom.equalTo(contentView)
       make.top.equalTo(contentView)
     }
   }
-    
+  
+  
 }
+
