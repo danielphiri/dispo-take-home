@@ -3,19 +3,18 @@ import WebKit
 
 class DetailViewController: UIViewController {
   
-  private let padding      : CGFloat = 30
-  private let searchResult : SearchResult
-  private let edgeInsets   : UIEdgeInsets?
-                           = UIApplication.shared.windows.first?.safeAreaInsets
-  private let gifViewHeight: CGFloat = 200
-  private var viewModel    : DetailViewModel?
+  private let padding       : CGFloat = 30
+  private let searchResult  : SearchResult
+  private let edgeInsets    : UIEdgeInsets?
+                            = UIApplication.shared.windows.first?.safeAreaInsets
+  private let gifViewHeight : CGFloat = 300
+  private var viewModel     : DetailViewModel?
   
   private var gifView: WKWebView = {
-    let webConfiguration = WKWebViewConfiguration()
-    webConfiguration.allowsInlineMediaPlayback = true
-    webConfiguration.mediaTypesRequiringUserActionForPlayback = []
-    let view = WKWebView(frame: .zero, configuration: webConfiguration)
-    view.contentMode = .scaleAspectFill
+    let view                        = WKWebView()
+    view.isOpaque                   = false
+    view.backgroundColor            = UIColor.clear
+    view.scrollView.backgroundColor = UIColor.clear
     return view
   }()
   
@@ -46,9 +45,9 @@ class DetailViewController: UIViewController {
     label.backgroundColor = .clear
     label.textColor       = .systemBlack
     label.textAlignment   = .center
-        label.numberOfLines   = 0
+    label.numberOfLines   = 0
     label.font            = UIFont.systemFont(ofSize: 32, weight: .regular)
-    label.lineBreakMode = .byTruncatingTail
+    label.lineBreakMode   = .byTruncatingTail
     return label
   }()
   
@@ -56,11 +55,6 @@ class DetailViewController: UIViewController {
     self.searchResult = searchResult
     super.init(nibName: nil, bundle: nil)
   }
-  
-//  override func viewDidLoad() {
-//    super.viewDidLoad()
-//
-//  }
 
   override func loadView() {
     view = UIView()
@@ -75,10 +69,10 @@ class DetailViewController: UIViewController {
   
   private func loadViewModel(searchResult: SearchResult) {
     let client = GifAPIClient<GifDetails>()
-    let model = Observable<GifDetails> { [weak self] info in
-      self?.updateData(with: info)
-    }
-    viewModel = DetailViewModel(searchResult: searchResult, client: client, model: model)
+    let model  = Observable<GifDetails> { [weak self] info in
+                  self?.updateData(with: info)
+                }
+    viewModel  = DetailViewModel(searchResult: searchResult, client: client, model: model)
   }
   
   private func updateData(with info: GifDetails?) {
@@ -89,7 +83,7 @@ class DetailViewController: UIViewController {
       self.titleLabel.text  = "Title: \(info.data.title)"
       self.sourceLabel.text = "Source: \(info.data.source_tld)"
       self.ratingLabel.text = "Rating: \(info.data.rating)"
-      let html              = "<img src=\"\(info.data.images.fixed_height.url)\" width=\"100%\">"
+      let html              = "<img src=\"\(info.data.images.fixed_height.url)\" width=\"100%\" height=\"100%\">"
       self.gifView.loadHTMLString(html, baseURL: nil)
     }
   }
@@ -114,25 +108,25 @@ class DetailViewController: UIViewController {
       make.top.equalTo(gifView.snp.bottom).offset(padding/2)
       make.leading.equalTo(view).offset(padding)
       make.trailing.equalTo(view).offset(-padding)
-//      make.bottom.equalTo(gifViewHeight)
     }
     sourceLabel.snp.makeConstraints { make in
       make.top.equalTo(titleLabel.snp.bottom).offset(padding/2)
       make.leading.equalTo(view).offset(padding)
       make.trailing.equalTo(view).offset(-padding)
-//      make.height.equalTo(gifViewHeight)
     }
     ratingLabel.snp.makeConstraints { make in
       make.top.equalTo(sourceLabel.snp.bottom).offset(padding/2)
       make.leading.equalTo(view).offset(padding)
       make.trailing.equalTo(view).offset(-padding)
-//      make.height.equalTo(gifViewHeight)
     }
   }
   
   private func addGestures() {
-    let rightSwipe = UISwipeGestureRecognizer.init(target: self, action: #selector(popController))
-    rightSwipe.direction = .right
+    let rightSwipe                = UISwipeGestureRecognizer(
+                                      target : self,
+                                      action : #selector(popController)
+                                    )
+    rightSwipe.direction          = .right
     view.isUserInteractionEnabled = true
     view.addGestureRecognizer(rightSwipe)
   }

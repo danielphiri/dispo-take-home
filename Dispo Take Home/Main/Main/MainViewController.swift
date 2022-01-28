@@ -14,24 +14,72 @@ class MainViewController: UIViewController {
   }
   
   private func initViewModel() {
+    let client = GifAPIClient<APIListResponse>()
     let model: Observable<APIListResponse> = Observable { [weak self] data in
       guard let self = self else { return }
       DispatchQueue.main.async {
         self.collectionView.reloadData()
       }
     }
-    viewModel = MainViewModel(model: model)
+    let dataState: Observable<ViewDataState> = Observable { [weak self] state in
+      guard let state = state else { return }
+      self?.handleState(state: state)
+    }
+    viewModel = MainViewModel(model: model, client: client, state: dataState)
+  }
+  
+  private func handleState(state: ViewDataState) {
+    switch state {
+      case .loading:
+        toggleLoadingMode(on: true)
+      case .displaying:
+        toggleLoadingMode(on: false)
+      case .emptyResults:
+        #warning("TODO: Handle No Results Case")
+      case .error:
+        #warning("TODO: Handle Error Case")
+    }
+  }
+  
+  private func toggleLoadingMode(on: Bool) {
+    DispatchQueue.main.async {
+      if on {
+        UIView.animate(withDuration: 0.8, delay: 0) {
+          self.spinner.startAnimating()
+          self.spinner.alpha = 1
+          self.collectionView.alpha = 0
+        } completion: { _ in }
+      } else {
+        UIView.animate(withDuration: 0.8, delay: 0) {
+          self.spinner.stopAnimating()
+          self.spinner.alpha = 0
+          self.collectionView.alpha = 1
+        } completion: { _ in }
+      }
+    }
   }
 
   override func loadView() {
     view = UIView()
     view.backgroundColor = .systemBackground
     view.addSubview(collectionView)
-
+    view.addSubview(spinner)
     collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
+    spinner.snp.makeConstraints { make in
+      make.width.equalTo(50)
+      make.height.equalTo(50)
+      make.centerX.equalTo(view.snp.centerX)
+      make.centerY.equalTo(view.snp.centerY)
+    }
   }
+  
+  private lazy var spinner: UIActivityIndicatorView = {
+    let spinner = UIActivityIndicatorView(style: .large)
+    spinner.alpha = 0
+    return spinner
+  }()
 
   private lazy var searchBar: UISearchBar = {
     let searchBar = UISearchBar()
@@ -70,6 +118,7 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    // TODO: implement
     viewModel?.search(text: searchText)
   }
 }
@@ -98,7 +147,7 @@ extension MainViewController: UICollectionViewDataSource {
       return .init()
     }
     let data = viewModel?.model.value?.data[indexPath.row]
-    cell.setUp(data: data, resetUI: searchBar.text != nil && searchBar.text != "")
+    cell.setUp(data: data)
     return cell
   }
   

@@ -20,7 +20,6 @@ final class Observable<T> {
                       }
   
   init(valueObserver: @escaping (T?) -> ()) {
-//    self.value         = value
     self.valueObserver = valueObserver
   }
   

@@ -15,22 +15,22 @@ class SearchCellView: CellConfigurable {
   private let padding        : CGFloat = 20
   private var isLoaded       = false
   
-  private var gifView: WKWebView = {
-    let webConfiguration = WKWebViewConfiguration()
-    webConfiguration.allowsInlineMediaPlayback = true
-    webConfiguration.mediaTypesRequiringUserActionForPlayback = []
-    let view = WKWebView(frame: .zero, configuration: webConfiguration)
+  private var gifView: WKWebView    = {
+    let view                        = WKWebView()
+    view.isOpaque                   = false
+    view.backgroundColor            = UIColor.clear
+    view.scrollView.backgroundColor = UIColor.clear
     return view
   }()
   
-  private var titleLabel: UILabel = {
+  private var titleLabel  : UILabel = {
     let label             = UILabel()
     label.backgroundColor = .clear
     label.textColor       = .systemBlack
     label.textAlignment   = .left
     //    label.numberOfLines   = 0
     label.font            = UIFont.systemFont(ofSize: 32, weight: .regular)
-    label.lineBreakMode = .byTruncatingTail
+    label.lineBreakMode   = .byTruncatingTail
     return label
   }()
   
@@ -44,17 +44,13 @@ class SearchCellView: CellConfigurable {
     loadSubviews()
   }
   
-  override func setUp<T>(data: T, resetUI: Bool) {
+  override func setUp<T>(data: T) {
     DispatchQueue.main.async {
-      if self.isLoaded && !resetUI {
-        return
-      }
-      guard let data = data as? SearchResult else { return }
-      self.model = data
+      guard let data       = data as? SearchResult else { return }
+      self.model           = data
       self.titleLabel.text = data.title
-      let html = "<img src=\"\(data.gifUrl)\" width=\"100%\">"
+      let html             = "<img src=\"\(data.gifUrl)\" width=\"100%\">"
       self.gifView.loadHTMLString(html, baseURL: nil)
-      self.isLoaded = true
     }
   }
   
@@ -75,8 +71,7 @@ class SearchCellView: CellConfigurable {
     
     titleLabel.snp.updateConstraints { make in
       make.left.equalTo(gifView.snp_rightMargin).offset(padding)
-      //      make.width.equalTo(contentView)
-      make.trailing.equalTo(contentView)//.offset(20)//.offset(-\padding)
+      make.trailing.equalTo(contentView)//.offset(-\padding)
       make.bottom.equalTo(contentView)
       make.top.equalTo(contentView)
     }

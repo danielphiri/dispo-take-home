@@ -2,11 +2,24 @@ import UIKit
 
 struct GifAPIClient<T: Decodable> : Clientable {
   
-  func fetch(url: BackendURL, appendingPath: String?, parameters: [String: String], completion: @escaping (Result<T?, Error>) -> ()) {
+  func fetch(
+    url           : BackendURL,
+    appendingPath : String?,
+    parameters    : [String: String],
+    completion    : @escaping (Result<T?, Error>) -> ()
+  ) {
     guard var components = URLComponents(string: "\(url.rawValue)\(appendingPath != nil ? "/\(appendingPath!)": "")") else {
-      let errorMessage = "Url could not be created from: \(url.rawValue)\(appendingPath != nil ? "/\(appendingPath!)": "")"
+      let errorMessage   = """
+                            Url could not be created from:
+                            \(url.rawValue)\(appendingPath != nil ?
+                            "/\(appendingPath!)": "")
+                          """
+      let error          = NSError(
+                            domain   : errorMessage,
+                            code     : ErrorCode.safeUnwrap.rawValue,
+                            userInfo : nil
+                          )
       safePrint(errorMessage)
-      let error = NSError(domain: errorMessage, code: ErrorCode.safeUnwrap.rawValue, userInfo: nil)
       completion(.failure(error))
       return
     }
@@ -17,10 +30,14 @@ struct GifAPIClient<T: Decodable> : Clientable {
       queryItems.append(URLQueryItem(name: parameter.key, value: parameter.value))
     }
     components.queryItems = queryItems
-    guard let webUrl = components.url else {
-      let errorMessage = "Url could not be created from: \(url)"
+    guard let webUrl      = components.url else {
+      let errorMessage    = "Url could not be created from: \(url)"
+      let error           = NSError(
+                            domain   : errorMessage,
+                            code     : ErrorCode.safeUnwrap.rawValue,
+                            userInfo : nil
+                          )
       safePrint(errorMessage)
-      let error = NSError(domain: errorMessage, code: ErrorCode.safeUnwrap.rawValue, userInfo: nil)
       completion(.failure(error))
       return
     }
@@ -37,21 +54,18 @@ struct GifAPIClient<T: Decodable> : Clientable {
           safePrint(webUrl)
           completion(.success(results))
         } catch DecodingError.dataCorrupted(let context) {
-          print(context)
-//          completion(.failure(context))
+          safePrint(context)
         } catch DecodingError.keyNotFound(let key, let context) {
-          print("Key '\(key)' not found:", context.debugDescription)
-          print("codingPath:", context.codingPath)
-          print(context)
-          print("codingPath:", context.codingPath)
+          safePrint("Key '\(key)' not found: \(context.debugDescription)")
+          safePrint("codingPath: \(context.codingPath)")
         } catch DecodingError.valueNotFound(let value, let context) {
-          print("Value '\(value)' not found:", context.debugDescription)
-          print("codingPath:", context.codingPath)
+          safePrint("Value '\(value)' not found: \(context.debugDescription)")
+          safePrint("codingPath: \(context.codingPath)")
         } catch DecodingError.typeMismatch(let type, let context) {
-          print("Type '\(type)' mismatch:", context.debugDescription)
-          print("codingPath:", context.codingPath)
+          safePrint("Type '\(type)' mismatch: \(context.debugDescription)")
+          safePrint("codingPath: \(context.codingPath)")
         } catch {
-          print("error: ", error)
+          safePrint("error: \(error)")
           completion(.failure(error))
         }
       } else {

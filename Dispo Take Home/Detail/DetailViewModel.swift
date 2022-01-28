@@ -13,7 +13,11 @@ final class DetailViewModel {
   private let client       : GifAPIClient<GifDetails>
   private let model        : Observable<GifDetails>
   
-  init(searchResult: SearchResult, client: GifAPIClient<GifDetails>, model: Observable<GifDetails>) {
+  init(
+    searchResult : SearchResult,
+    client       : GifAPIClient<GifDetails>,
+    model        : Observable<GifDetails>
+  ) {
     self.searchResult = searchResult
     self.client       = client
     self.model        = model
@@ -21,7 +25,11 @@ final class DetailViewModel {
   }
   
   private func load() {
-    client.fetch(url: .gifInfo, appendingPath: "\(searchResult.id)", parameters: [:]) { [weak self] result in
+    client.fetch(
+      url           : .gifInfo,
+      appendingPath : "\(searchResult.id)",
+      parameters    : [:]
+    ) { [weak self] result in
       guard let self = self else { return }
       switch result {
         case .failure(let error):

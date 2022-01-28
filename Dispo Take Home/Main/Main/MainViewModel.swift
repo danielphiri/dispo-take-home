@@ -9,11 +9,18 @@ import Foundation
 
 final class MainViewModel {
   
-  let client = GifAPIClient<APIListResponse>()
+  let client : GifAPIClient<APIListResponse>
   var model  : Observable<APIListResponse>
+  var state  : Observable<ViewDataState>
   
-  init(model: Observable<APIListResponse>) {
-    self.model = model
+  init(
+    model  : Observable<APIListResponse>,
+    client : GifAPIClient<APIListResponse>,
+    state  : Observable<ViewDataState>
+  ) {
+    self.model  = model
+    self.state  = state
+    self.client = client
     fetchTrending()
   }
   
@@ -22,37 +29,48 @@ final class MainViewModel {
       fetchTrending()
       return
     }
-    client.fetch(url: .search, appendingPath: nil, parameters: ["q": text]) { [weak self] result in
+    client.fetch(
+      url           : .search,
+      appendingPath : nil,
+      parameters    : ["q": text]
+    ) { [weak self] result in
       guard let self = self else { return }
       switch result {
         case .failure(let error):
           safePrint("Error happened: \(error.localizedDescription)")
-          #warning("TODO: Handle error case")
+          self.state.value = .error
         case .success(let value):
           guard let value = value else {
             safePrint("No data returned")
-            #warning("TODO: Handle no data case")
+            self.state.value = .emptyResults
             return
           }
           self.model.value = value
+          self.state.value = .displaying
       }
     }
   }
   
   private func fetchTrending() {
-    client.fetch(url: .trending, appendingPath: nil, parameters: ["rating": "pg"]) { [weak self] result in
+    state.value = .loading
+    client.fetch(
+      url           : .trending,
+      appendingPath : nil,
+      parameters    : ["rating": "pg"]
+    ) { [weak self] result in
       guard let self = self else { return }
       switch result {
         case .failure(let error):
           safePrint("Error happened: \(error.localizedDescription)")
-          #warning("TODO: Handle error case")
+          self.state.value = .error
         case .success(let value):
           guard let value = value else {
             safePrint("No data returned")
-            #warning("TODO: Handle no data case")
+            self.state.value = .emptyResults
             return
           }
           self.model.value = value
+          self.state.value = .displaying
       }
     }
   }

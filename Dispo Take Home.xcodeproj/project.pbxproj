@@ -13,11 +13,12 @@
 		944C54D527A1DE0400BF1491 /* GifCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D427A1DE0400BF1491 /* GifCellView.swift */; };
 		944C54D727A1DED300BF1491 /* GifCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D627A1DED300BF1491 /* GifCellViewModel.swift */; };
 		944C54D927A1DF4500BF1491 /* CellConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54D827A1DF4500BF1491 /* CellConfigurable.swift */; };
-		944C54DB27A1DFAF00BF1491 /* CellViewModelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54DA27A1DFAF00BF1491 /* CellViewModelable.swift */; };
 		944C54DD27A21BBB00BF1491 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54DC27A21BBA00BF1491 /* Extensions.swift */; };
 		944C54DF27A313A900BF1491 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54DE27A313A900BF1491 /* DetailViewModel.swift */; };
 		944C54E227A315FF00BF1491 /* SearchCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54E127A315FF00BF1491 /* SearchCellView.swift */; };
 		944C54E427A32B6C00BF1491 /* GifObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54E327A32B6C00BF1491 /* GifObject.swift */; };
+		944C54E627A37D4E00BF1491 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54E527A37D4E00BF1491 /* DetailModel.swift */; };
+		944C54E827A3836D00BF1491 /* ViewDataState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944C54E727A3836D00BF1491 /* ViewDataState.swift */; };
 		9A829F02277D7CF7002C03F2 /* APIListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A829F01277D7CF7002C03F2 /* APIListResponse.swift */; };
 		FF9415B525EECD340029E28F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9415B425EECD340029E28F /* AppDelegate.swift */; };
 		FF9415B725EECD340029E28F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9415B625EECD340029E28F /* SceneDelegate.swift */; };
@@ -41,11 +42,12 @@
 		944C54D427A1DE0400BF1491 /* GifCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCellView.swift; sourceTree = "<group>"; };
 		944C54D627A1DED300BF1491 /* GifCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifCellViewModel.swift; sourceTree = "<group>"; };
 		944C54D827A1DF4500BF1491 /* CellConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellConfigurable.swift; sourceTree = "<group>"; };
-		944C54DA27A1DFAF00BF1491 /* CellViewModelable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModelable.swift; sourceTree = "<group>"; };
 		944C54DC27A21BBA00BF1491 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		944C54DE27A313A900BF1491 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		944C54E127A315FF00BF1491 /* SearchCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellView.swift; sourceTree = "<group>"; };
 		944C54E327A32B6C00BF1491 /* GifObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifObject.swift; sourceTree = "<group>"; };
+		944C54E527A37D4E00BF1491 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
+		944C54E727A3836D00BF1491 /* ViewDataState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDataState.swift; sourceTree = "<group>"; };
 		9A829F01277D7CF7002C03F2 /* APIListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIListResponse.swift; sourceTree = "<group>"; };
 		FF9415B125EECD340029E28F /* Dispo Take Home.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dispo Take Home.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9415B425EECD340029E28F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				944C54E127A315FF00BF1491 /* SearchCellView.swift */,
+				FF9415E125EEDC3A0029E28F /* SearchResult.swift */,
 			);
 			path = "Search Cell";
 			sourceTree = "<group>";
@@ -166,6 +169,8 @@
 			children = (
 				FF9415D125EED2590029E28F /* DetailViewController.swift */,
 				944C54DE27A313A900BF1491 /* DetailViewModel.swift */,
+				944C54E527A37D4E00BF1491 /* DetailModel.swift */,
+				FF9415F525EEF5760029E28F /* GifInfo.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -174,14 +179,12 @@
 			isa = PBXGroup;
 			children = (
 				FF9415D425EED60B0029E28F /* Constants.swift */,
-				FF9415F525EEF5760029E28F /* GifInfo.swift */,
-				FF9415E125EEDC3A0029E28F /* SearchResult.swift */,
 				FF9415E525EEDF380029E28F /* GifApiClient.swift */,
 				944C54CD27A1CBB100BF1491 /* Clientable.swift */,
 				944C54D127A1D66500BF1491 /* Observable.swift */,
 				944C54D827A1DF4500BF1491 /* CellConfigurable.swift */,
-				944C54DA27A1DFAF00BF1491 /* CellViewModelable.swift */,
 				944C54DC27A21BBA00BF1491 /* Extensions.swift */,
+				944C54E727A3836D00BF1491 /* ViewDataState.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -266,8 +269,8 @@
 			files = (
 				944C54E227A315FF00BF1491 /* SearchCellView.swift in Sources */,
 				944C54CE27A1CBB100BF1491 /* Clientable.swift in Sources */,
+				944C54E827A3836D00BF1491 /* ViewDataState.swift in Sources */,
 				FF9415F625EEF5760029E28F /* GifInfo.swift in Sources */,
-				944C54DB27A1DFAF00BF1491 /* CellViewModelable.swift in Sources */,
 				FF9415E625EEDF380029E28F /* GifApiClient.swift in Sources */,
 				FF9415D525EED60B0029E28F /* Constants.swift in Sources */,
 				944C54D227A1D66500BF1491 /* Observable.swift in Sources */,
@@ -281,6 +284,7 @@
 				944C54DF27A313A900BF1491 /* DetailViewModel.swift in Sources */,
 				944C54D727A1DED300BF1491 /* GifCellViewModel.swift in Sources */,
 				944C54DD27A21BBB00BF1491 /* Extensions.swift in Sources */,
+				944C54E627A37D4E00BF1491 /* DetailModel.swift in Sources */,
 				9A829F02277D7CF7002C03F2 /* APIListResponse.swift in Sources */,
 				944C54D027A1D62500BF1491 /* MainViewModel.swift in Sources */,
 				944C54E427A32B6C00BF1491 /* GifObject.swift in Sources */,
